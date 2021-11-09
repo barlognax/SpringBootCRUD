@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adresses</title>
+</head>
+
+<body>
+<div th:switch="${personAdress}">
+    <h2 th:case="null">No adress found!</h2>
+    <div th:case="*">
+        <h2>Adresses of
+            <div th:text="*{person.firstName}+' '+*{person.lastName}+' (ID '+*{person.id}+')'"
+            ></div>
+        </h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Country</th>
+                <th>City</th>
+                <th>Street</th>
+                <th>Number of house</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="adress : ${personAdress}">
+                <td th:text="${adress.country}"></td>
+                <td th:text="${adress.city}"></td>
+                <td th:text="${adress.street}"></td>
+                <td th:text="${adress.numberOfHouse}"></td>
+                <td><a th:href="@{adress-update/{id}(id=${adress.id})}">Edit</a></td>
+                <td><a th:href="@{adress-delete/{id}(id=${adress.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <form th:action="@{adress-create/{id}(id=${person.id})}">
+        <button>Create adress</button>
+    </form>
+    <br>
+    <body>
+    <form action="/persons">
+        <button>Return to Persons</button>
+    </form>
+    </body>
+</div>
+</body>
+</html>
